@@ -1,0 +1,36 @@
+load("@aspect_rules_jest//jest:defs.bzl", "jest_test")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+ts_project(
+    name = "src_ts",
+    srcs = [
+        "a.ts",
+    ],
+    declaration = True,
+    tsconfig = "//:tsconfig",
+    deps = [
+        "//:node_modules/@types/node",
+    ],
+)
+
+ts_project(
+    name = "src_test_ts",
+    srcs = [
+        "a.spec.ts",
+    ],
+    declaration = True,
+    tsconfig = "//:tsconfig",
+    deps = [
+        ":src_ts",
+        "//:node_modules/@types/jest",
+    ],
+)
+
+jest_test(
+    name = "src_test",
+    config = "//:jest_config",
+    data = [
+        ":src_test_ts",
+    ],
+    node_modules = "//:node_modules",
+)
