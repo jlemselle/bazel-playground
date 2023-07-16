@@ -28,7 +28,6 @@ ts_project(
 
 jest_test(
     name = "src_test",
-    config = "//:jest_config",
     data = [
         ":src_test_ts",
     ],
